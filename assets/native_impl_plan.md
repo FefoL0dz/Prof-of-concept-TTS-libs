@@ -81,3 +81,77 @@ Goal: implement platform-channel handlers that power `SherpaTtsProvider` inside 
 8. Update documentation and commit.
 
 This plan provides a detailed blueprint to implement the Sherpa native channels cleanly on both platforms before touching any platform code.
+
+
+
+I can’t actually wire up the sherpa_tts channel without the native runtime—we need Piper/Sherpa binaries (and at least one model file) checked into the repo or referenced via
+a pod/Gradle dependency. Once those libraries are in place I can add the Kotlin/Swift handlers, but with nothing to call on either platform we’d just return errors. Let me
+know when you’ve added the native Sherpa/Piper build artifacts (or picked a specific SDK) and I’ll wire up the channel exactly as in the plan.
+
+▌ Yeah, ok but explain me where should I go and what should I change
+
+> Here’s what you need in place before I can hook up the channel. Think of it in two halves (Android/iOS). Once these pieces exist, wiring the Kotlin/Swift handlers is
+straightforward.
+
+———
+
+1. Gather native artifacts
+
+- Download/build the Sherpa/Piper runtime for each platform. Typically you need:
+   - Core library (JNI .so for Android, .a/.framework for iOS)
+   - Model files (e.g. pt-br-voice-x.onnx plus config JSON)
+   - Any extra resources (phoneme dicts, etc.)
+- Keep at least one model per language you want to expose; you can map them via voiceId → file name.
+
+———
+
+2. Drop them in the project
+
+- Android: place .so files under android/app/src/main/jniLibs/<abi>/ (e.g., jniLibs/arm64-v8a/libpiper.so). Put model files in android/app/src/main/assets/sherpa/ or
+  somewhere accessible (remember to load them via assets.open).
+- iOS: add the static library or framework to ios/Runner. Using Xcode:
+   - Drag the .xcframework/.a + headers into the Runner target.
+   - Add the model files to the app bundle (right-click “Runner” → “Add files…” → check “Copy items if needed”).
+
+———
+
+3. Set up Kotlin/Swift code
+
+- Android:
+   1. Edit android/app/src/main/kotlin/<package>/MainActivity.kt.
+   2. In configureFlutterEngine, register:
+
+      MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "sherpa_tts")
+      .setMethodCallHandler { call, result -> … }
+   3. Inside the handler, parse text, voiceId, languageCode.
+   4. Offload to CoroutineScope(Dispatchers.Default) (or similar):
+      - Initialize the Piper engine (load model file matching voiceId).
+      - Run inference → PCM samples.
+      - Encode to WAV/MP3. (If you don’t have an encoder, return WAV: add a simple header + PCM 16-bit audio.)
+      - Return result.success(byteArray).
+- iOS:
+   1. Open ios/Runner/AppDelegate.swift.
+   2. After GeneratedPluginRegistrant.register(with:), add:
+
+      let channel = FlutterMethodChannel(name: "sherpa_tts", binaryMessenger: controller.binaryMessenger)
+      channel.setMethodCallHandler { call, result in … }
+   3. Dispatch synthesize work onto a background queue. Load the model from the bundle, run the Piper API, build WAV/MP3 bytes, and call result(data).
+
+———
+
+4. Update Dart if audio format changes
+
+- If native layers return WAV (recommended to avoid MP3 encoder complexity), update MyCustomSource’s contentType to audio/wav. just_audio can play WAV as well.
+
+———
+
+5. Document + test
+
+- Add README notes on how to build the native libraries and where to place models.
+- Rebuild both apps, select “SherpaTTS” in the Flutter UI, and ensure audio plays.
+
+———
+
+Once you’ve added the native libraries and model files to the repo (or specified the packages you’re using), I can implement the Kotlin/Swift handlers for you. Without actual
+native functions to call, the Flutter side will keep hitting MissingPluginException. So the next concrete step is: drop in the Piper/Sherpa SDK files, confirm the model
+paths, and we’ll wire everything together.
