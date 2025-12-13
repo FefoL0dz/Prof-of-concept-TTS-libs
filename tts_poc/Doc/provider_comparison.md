@@ -17,26 +17,53 @@ This document categorises every [TtsProvider](cci:2://file:///Users/framework/De
 
 ## 2. Provider table
 
-| Provider | Category | Needs API Key? | Endpoint configurable? | Offline? | Native MethodChannel? | Voice list (built‑in) | Remarks |
-|----------|----------|----------------|------------------------|----------|-----------------------|-----------------------|---------|
-| **Google Cloud TTS** | Online – API key required | Yes (service‑account JSON) | No (uses [assets/credentials.json](cci:7://file:///Users/framework/Desktop/Estudos/Prof-of-concept-TTS-libs/assets/credentials.json:0:0-0:0)) | No | No | ✅ (full list) | Requires [assets/credentials.json](cci:7://file:///Users/framework/Desktop/Estudos/Prof-of-concept-TTS-libs/assets/credentials.json:0:0-0:0). |
-| **AWS Polly** | Online – API key required | Yes (AWS_ACCESS_KEY_ID / SECRET) | No (region auto‑detected) | No | No | ✅ (few PT‑BR voices) | Uses SigV4 signing. |
-| **Azure Speech** | Online – API key required | Yes (AZURE_SPEECH_KEY) | No (region required) | No | No | ✅ (few PT‑BR voices) | Supports SSML styles. |
-| **ElevenLabs** | Online – API key required | Yes (ELEVENLABS_API_KEY) | Yes (`ELEVENLABS_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | Premium neural voices. |
-| **Play.ht** | Online – API key required | Yes (PLAYHT_API_KEY) | Yes (`PLAYHT_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | |
-| **Murf.ai** | Online – API key required | Yes (MURF_API_KEY) | Yes (`MURF_ENDPOINT`) | No | No | ✅ (no preset voices) | |
-| **WellSaid Labs** | Online – API key required | Yes (WELLSAID_API_KEY) | Yes (`WELLSAID_ENDPOINT`) | No | No | ✅ (no preset voices) | |
-| **Resemble AI** | Online – API key required | Yes (RESEMBLE_API_KEY) | Yes (`RESEMBLE_ENDPOINT`) | No | No | ✅ (no preset voices) | |
-| **ResponsiveVoice** | Online – API key optional | Yes (RESPONSIVE_VOICE_KEY) | Yes (`RESPONSIVE_VOICE_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | |
-| **Coqui Server** | Online – No key needed* | No | Yes (`COQUI_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | `*` only if your server does not enforce auth. |
-| **MaryTTS** | Online – No key needed* | No | Yes (`MARYTTS_ENDPOINT`) | No | No | ❌ (empty list) | You may need to extend the provider to expose voices. |
-| **Espeak NG** | Online – No key needed* | No | Yes (`ESPEAK_ENDPOINT`) | No | No | ❌ (empty list) | |
-| **Festival/Flite** | Online – No key needed* | No | Yes (`FESTIVAL_ENDPOINT`) | No | No | ❌ (empty list) | |
-| **Embedded Piper** | Offline – Native library | No | No | Yes | Yes (`embedded_piper` channel) | ❌ (empty list) | Requires compiled `.so`/`.framework` and native channel implementation. |
-| **Sherpa ONNX** | Offline – Native library | No | No | Yes | Yes (`sherpa_tts` channel) | ✅ (populated by native side) | Needs `.onnx` models & native binaries. |
-| **Device TTS (flutter_tts)** | Device‑built‑in | No | No | Yes (uses OS engine) | No | ✅ (filtered list) | Works out‑of‑the‑box on Android/iOS. |
+| Provider | Category | Free/Paid | Needs API Key? | Endpoint configurable? | Offline? | Native MethodChannel? | Voice list (built‑in) | Human‑like voice score (1-5) | Remarks |
+|----------|----------|-----------|----------------|------------------------|----------|-----------------------|-----------------------|------------------------------|---------|
+| **Google Cloud TTS** | Online – API key required | Paid | Yes (service‑account JSON) | No (uses [assets/credentials.json](cci:7://file:///Users/framework/Desktop/Estudos/Prof-of-concept-TTS-libs/assets/credentials.json:0:0-0:0)) | No | No | ✅ (full list) | 5 | Requires [assets/credentials.json](cci:7://file:///Users/framework/Desktop/Estudos/Prof-of-concept-TTS-libs/assets/credentials.json:0:0-0:0). |
+| **AWS Polly** | Online – API key required | Paid | Yes (AWS_ACCESS_KEY_ID / SECRET) | No (region auto‑detected) | No | No | ✅ (few PT‑BR voices) | 4 | Uses SigV4 signing. |
+| **Azure Speech** | Online – API key required | Paid | Yes (AZURE_SPEECH_KEY) | No (region required) | No | No | ✅ (few PT‑BR voices) | 4 | Supports SSML styles. |
+| **ElevenLabs** | Online – API key required | Paid | Yes (ELEVENLABS_API_KEY) | Yes (`ELEVENLABS_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | 5 | Premium neural voices. |
+| **Play.ht** | Online – API key required | Paid | Yes (PLAYHT_API_KEY) | Yes (`PLAYHT_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | 4 | |
+| **Murf.ai** | Online – API key required | Paid | Yes (MURF_API_KEY) | Yes (`MURF_ENDPOINT`) | No | No | ✅ (no preset voices) | 4 | |
+| **WellSaid Labs** | Online – API key required | Paid | Yes (WELLSAID_API_KEY) | Yes (`WELLSAID_ENDPOINT`) | No | No | ✅ (no preset voices) | 4 | |
+| **Resemble AI** | Online – API key required | Paid | Yes (RESEMBLE_API_KEY) | Yes (`RESEMBLE_ENDPOINT`) | No | No | ✅ (no preset voices) | 4 | |
+| **ResponsiveVoice** | Online – API key optional | Paid | Yes (RESPONSIVE_VOICE_KEY) | Yes (`RESPONSIVE_VOICE_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | 3 | |
+| **Coqui Server** | Online – No key needed* | Free | No | Yes (`COQUI_ENDPOINT`) | No | No | ✅ (single PT‑BR voice) | 3 | `*` only if your server does not enforce auth. |
+| **MaryTTS** | Online – No key needed* | Free | No | Yes (`MARYTTS_ENDPOINT`) | No | No | ❌ (empty list) | 2 | You may need to extend the provider to expose voices. |
+| **Espeak NG** | Online – No key needed* | Free | No | Yes (`ESPEAK_ENDPOINT`) | No | No | ❌ (empty list) | 1 | |
+| **Festival/Flite** | Online – No key needed* | Free | No | Yes (`FESTIVAL_ENDPOINT`) | No | No | ❌ (empty list) | 1 | |
+| **Embedded Piper** | Offline – Native library | Free | No | No | Yes | Yes (`embedded_piper` channel) | ❌ (empty list) | 3 | Requires compiled `.so`/`.framework` and native channel implementation. |
+| **Sherpa ONNX** | Offline – Native library | Free | No | No | Yes | Yes (`sherpa_tts` channel) | ✅ (populated by native side) | 3 | Needs `.onnx` models & native binaries. |
+| **Device TTS (flutter_tts)** | Device‑built‑in | Free | No | No | Yes (uses OS engine) | No | ✅ (filtered list) | 3 | Works out‑of‑the‑box on Android/iOS. |
 
 \* If your self‑hosted server enforces authentication you’ll need to add a key‑header manually.
+
+---
+
+## Additional considerations
+
+Below is a quick‑reference table with practical factors that often influence the final choice of a TTS provider.
+
+| Provider | Cost (Free/Paid) | Approx. pricing* | Typical latency | Language coverage | Remarks |
+|----------|------------------|------------------|----------------|-------------------|---------|
+| Google Cloud TTS | Paid | $4‑$16 per million characters (depends on voice) | Low (≈200 ms) | 220+ voices, many languages | High‑quality neural, supports SSML |
+| AWS Polly | Paid | $4 per million characters (standard) / $16 (neural) | Low (≈150 ms) | 60+ voices, many languages | Good Portuguese support |
+| Azure Speech | Paid | $1‑$4 per million characters | Low (≈180 ms) | 75+ voices, many languages | Strong SSML, custom voice support |
+| ElevenLabs | Paid | $5‑$20 per month (subscription) | Medium (≈500 ms) | English (plus a few others) | Very natural neural voices |
+| Play.ht | Paid | $15‑$30 per month (tiered) | Medium (≈400 ms) | English, Spanish, etc. | API‑first, easy integration |
+| Murf.ai | Paid | $19‑$49 per month | Medium (≈450 ms) | English, Portuguese, etc. | Studio‑grade voices |
+| WellSaid Labs | Paid | $30‑$99 per month | Medium (≈400 ms) | English, Spanish, etc. | Premium voice quality |
+| Resemble AI | Paid | $25‑$100 per month | Medium (≈450 ms) | English, others | Custom voice cloning |
+| ResponsiveVoice | Free (with key) / Paid for premium | Free tier limited, paid plans start $9/mo | High (≈800 ms) | Many languages, but robotic quality |
+| Coqui Server | Free (self‑hosted) | No direct cost, server hosting fees | Variable (depends on server) | Many languages, open‑source models | Requires own server |
+| MaryTTS | Free (self‑hosted) | No direct cost, server hosting fees | Variable | Many languages, open‑source | Requires setup, limited voice quality |
+| Espeak NG | Free | No cost | Low (≈50 ms) | 100+ languages | Very robotic, low quality |
+| Festival/Flite | Free | No cost | Low (≈70 ms) | Many languages | Older open‑source engines |
+| Embedded Piper | Free (offline) | No cost | Low (≈100 ms) | Many languages, on‑device | Requires model files, good quality |
+| Sherpa ONNX | Free (offline) | No cost | Low (≈120 ms) | Limited (few languages) | Requires ONNX models, good quality |
+| Device TTS (flutter_tts) | Free | No cost | Low (OS dependent) | Depends on OS voices | Uses system TTS, limited customization |
+
+*Pricing is indicative and may vary by region and usage tier. Always check the provider’s official pricing page.
 
 ---
 
