@@ -80,3 +80,24 @@ When considering price versus voice quality, latency, and feature set, the provi
 | 16 | **Festival/Flite** | Free | Older engines, low naturalness – lowest value.
 
 *Pricing is indicative and may vary by region and usage tier. Always verify current rates on the provider’s pricing page.
+
+## Best pt‑BR Mobile App Providers (Ranked)
+
+| Rank | Provider | pt‑BR Voice Support | Reasoning |
+|------|----------|--------------------|-----------|
+| 1 | **Google Cloud TTS** | ✅ Full‑featured pt‑BR neural & standard voices | Highest naturalness, massive catalog, low latency, easy auth. |
+| 2 | **AWS Polly** | ✅ Several pt‑BR voices (standard & neural) | Good quality, low latency, straightforward credentials. |
+| 3 | **Azure Speech** | ✅ Few pt‑BR voices (standard) | Strong SSML, reliable latency, simple config. |
+| 4 | **ElevenLabs** | ✅ One pt‑BR neural voice | Very natural, API‑first, subscription‑based. |
+| 5 | **WellSaid Labs** | ✅ One pt‑BR neural voice | Premium quality, easy HTTP API. |
+| 6 | **Murf.ai** | ✅ One pt‑BR neural voice | Studio‑grade, reasonable price. |
+| 7 | **Play.ht** | ✅ One pt‑BR neural voice | Good quality, tiered pricing. |
+| 8 | **ResponsiveVoice** | ✅ One pt‑BR synthetic voice | Free tier, easy embed, more robotic. |
+| 9 | **Coqui Server** | ✅ Community pt‑BR models available | Free/open‑source, self‑hosted; latency depends on server. |
+| 10 | **Device TTS (flutter_tts)** | ✅ Uses OS pt‑BR voices | Zero cost, offline, quality varies by device. |
+| 11 | **Embedded Piper** | ✅ Offline pt‑BR models (if bundled) | Good offline quality, needs model files. |
+| 12 | **Sherpa ONNX** | ✅ Limited pt‑BR support (custom models) | Fully offline, requires ONNX models. |
+| 13 | **Resemble AI** | ✅ Custom pt‑BR voice cloning (requires training) | Powerful but expensive. |
+| 14 | **MaryTTS** | ✅ Can be trained for pt‑BR (self‑hosted) | Open‑source, needs server and custom data. |
+| 15 | **Espeak NG** | ✅ Basic pt‑BR synthesis | Very robotic, low quality. |
+| 16 | **Festival/Flite** | ✅ Basic pt‑BR synthesis | Similar to Espeak, low naturalness. |
